@@ -5,8 +5,8 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Secret = "Do you want to know my secret?"
 
-
-const Soclist = new Set(["sarasva" , "rangtarangini"]);
+// constants importing
+const {check} = require('../constants.js')
 
 // authentication
 // field -> rollNo , password  , email , age , name
@@ -32,7 +32,7 @@ router.post('/Signup', async(req, res) =>{
         return res.status(400).send("Signup with email id please ");
     }
 
-    if( Soclist.has(socname) ){
+    if( check(socname) ){
         type = "society"
     }
 
@@ -65,6 +65,7 @@ router.post('/Login', async(req, res) =>{
         name: registered_user.name,
         role: registered_user.type,
         email : registered_user.email,
+        rollNo : registered_user.rollNo,
     }
     const token = jwt.sign(authClaims,Secret,{
         expiresIn:"30d",

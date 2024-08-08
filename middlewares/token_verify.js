@@ -4,6 +4,10 @@ const Secret = "Do you want to know my secret?"
 const check_login = (req,res,next) => {
     // console.log(req.headers)
 
+    if(!req.headers || !req.headers["authorization"]){
+        return res.status(401).json({message: "Authentication token required"});
+    }
+
     const token = req.headers["authorization"].split(" ")[1] 
 
     // const authHeader= req.headers["authorization"];
